@@ -1,0 +1,148 @@
+2024-08-24 17:44:52 [main] INFO  c.m.g.b.B.BatchGtcFitApplication - Starting BatchGtcFitApplication using Java 22.0.1 with PID 11444 (D:\workspace\batchMasterFit\BatchGtcFit\target\classes started by MonoLoco in D:\workspace\batchMasterFit\BatchGtcFit)
+2024-08-24 17:44:52 [main] INFO  c.m.g.b.B.BatchGtcFitApplication - No active profile set, falling back to 1 default profile: "default"
+2024-08-24 17:44:52 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-24 17:44:52 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 8 ms. Found 0 JPA repository interfaces.
+2024-08-24 17:44:52 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Hikari' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Hikari] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [jobRegistryBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-08-24 17:44:52 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [jobRegistryBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-08-24 17:44:52 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration$PooledDataSourceConfiguration' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration$PooledDataSourceConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [jobRegistryBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-08-24 17:44:52 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'jdbcConnectionDetails' of type [org.springframework.boot.autoconfigure.jdbc.PropertiesJdbcConnectionDetails] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [jobRegistryBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-08-24 17:44:52 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dataSource' of type [com.zaxxer.hikari.HikariDataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [jobRegistryBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-08-24 17:44:52 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'jobConfiguration' of type [com.millicom.gtc.batchfit.BatchGtcFit.JobConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [jobRegistryBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-08-24 17:44:52 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'transactionManager' of type [org.springframework.jdbc.support.JdbcTransactionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [jobRegistryBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-08-24 17:44:52 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.batch-org.springframework.boot.autoconfigure.batch.BatchProperties' of type [org.springframework.boot.autoconfigure.batch.BatchProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [jobRegistryBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-08-24 17:44:52 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration$SpringBootBatchConfiguration' of type [org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration$SpringBootBatchConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [jobRegistryBeanPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-08-24 17:44:52 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8081 (http)
+2024-08-24 17:44:52 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2024-08-24 17:44:52 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-24 17:44:52 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-08-24 17:44:53 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-24 17:44:53 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 844 ms
+2024-08-24 17:44:53 [main] INFO  com.zaxxer.hikari.HikariDataSource - SpringBootJPAHikariCP - Starting...
+2024-08-24 17:44:53 [main] INFO  com.zaxxer.hikari.pool.HikariPool - SpringBootJPAHikariCP - Added connection org.postgresql.jdbc.PgConnection@1e1237ab
+2024-08-24 17:44:53 [main] INFO  com.zaxxer.hikari.HikariDataSource - SpringBootJPAHikariCP - Start completed.
+2024-08-24 17:44:53 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-24 17:44:53 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.9.Final
+2024-08-24 17:44:53 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-24 17:44:53 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-24 17:44:53 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-24 17:44:53 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-24 17:44:53 [main] DEBUG o.s.b.c.c.s.JobRegistryBeanPostProcessor - Registering job: Job
+2024-08-24 17:44:53 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-24 17:44:54 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2024-08-24 17:44:54 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8081 (http) with context path ''
+2024-08-24 17:44:54 [main] INFO  c.m.g.b.B.BatchGtcFitApplication - Started BatchGtcFitApplication in 2.412 seconds (process running for 2.849)
+2024-08-24 17:44:54 [main] INFO  o.s.b.a.b.JobLauncherApplicationRunner - Running default command line with: []
+2024-08-24 17:44:54 [scheduling-1] INFO  o.s.b.c.l.support.SimpleJobLauncher - Job: [FlowJob: [name=Job]] launched with the following parameters: [{'time':'{value=1724539494261, type=class java.lang.Long, identifying=true}'}]
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.batch.core.job.AbstractJob - Job execution starting: JobExecution: id=209, version=0, startTime=null, endTime=null, lastUpdated=2024-08-24T17:44:54.278497400, status=STARTING, exitStatus=exitCode=UNKNOWN;exitDescription=, job=[JobInstance: id=203, version=0, Job=[Job]], jobParameters=[{'time':'{value=1724539494261, type=class java.lang.Long, identifying=true}'}]
+2024-08-24 17:44:54 [main] INFO  o.s.b.c.l.support.SimpleJobLauncher - Job: [FlowJob: [name=Job]] launched with the following parameters: [{'run.id':'{value=1, type=class java.lang.Long, identifying=true}','time':'{value=1724524704616, type=class java.lang.Long, identifying=true}'}]
+2024-08-24 17:44:54 [main] DEBUG o.s.batch.core.job.AbstractJob - Job execution starting: JobExecution: id=210, version=0, startTime=null, endTime=null, lastUpdated=2024-08-24T17:44:54.291501500, status=STARTING, exitStatus=exitCode=UNKNOWN;exitDescription=, job=[JobInstance: id=204, version=0, Job=[Job]], jobParameters=[{'run.id':'{value=1, type=class java.lang.Long, identifying=true}','time':'{value=1724524704616, type=class java.lang.Long, identifying=true}'}]
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.c.job.flow.support.SimpleFlow - Resuming state=Job.step0 with status=UNKNOWN
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.c.job.flow.support.SimpleFlow - Handling state=Job.step0
+2024-08-24 17:44:54 [main] DEBUG o.s.b.c.job.flow.support.SimpleFlow - Resuming state=Job.step0 with status=UNKNOWN
+2024-08-24 17:44:54 [main] DEBUG o.s.b.c.job.flow.support.SimpleFlow - Handling state=Job.step0
+2024-08-24 17:44:54 [scheduling-1] INFO  o.s.batch.core.job.SimpleStepHandler - Executing step: [gtcGeneration]
+2024-08-24 17:44:54 [main] INFO  o.s.batch.core.job.SimpleStepHandler - Executing step: [gtcGeneration]
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.batch.core.step.AbstractStep - Executing: id=205
+2024-08-24 17:44:54 [main] DEBUG o.s.batch.core.step.AbstractStep - Executing: id=204
+2024-08-24 17:44:54 [main] DEBUG o.s.b.repeat.support.RepeatTemplate - Starting repeat context.
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Starting repeat context.
+2024-08-24 17:44:54 [main] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat operation about to start at count=1
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat operation about to start at count=1
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.c.s.c.StepContextRepeatCallback - Preparing chunk execution for StepContext: org.springframework.batch.core.scope.context.StepContext@4b0f61b5
+2024-08-24 17:44:54 [main] DEBUG o.s.b.c.s.c.StepContextRepeatCallback - Preparing chunk execution for StepContext: org.springframework.batch.core.scope.context.StepContext@27682fa9
+2024-08-24 17:44:54 [main] DEBUG o.s.b.c.s.c.StepContextRepeatCallback - Chunk execution starting: queue size=0
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.c.s.c.StepContextRepeatCallback - Chunk execution starting: queue size=0
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Starting repeat context.
+2024-08-24 17:44:54 [main] DEBUG o.s.b.repeat.support.RepeatTemplate - Starting repeat context.
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat operation about to start at count=1
+2024-08-24 17:44:54 [main] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat operation about to start at count=1
+2024-08-24 17:44:54 [main] DEBUG o.s.b.i.d.JdbcPagingItemReader - Reading page 0
+2024-08-24 17:44:54 [main] DEBUG o.s.b.i.d.JdbcPagingItemReader - SQL used for reading first page: [SELECT * FROM test_plans WHERE status = 'IN_PROGRESS' ORDER BY id ASC LIMIT 1000]
+2024-08-24 17:44:54 [main] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat operation about to start at count=2
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat operation about to start at count=2
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat operation about to start at count=3
+2024-08-24 17:44:54 [main] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat operation about to start at count=3
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat operation about to start at count=4
+2024-08-24 17:44:54 [main] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat operation about to start at count=4
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat operation about to start at count=5
+2024-08-24 17:44:54 [main] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat operation about to start at count=5
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat operation about to start at count=6
+2024-08-24 17:44:54 [main] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat is complete according to policy and result value.
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat is complete according to policy and result value.
+2024-08-24 17:44:54 [scheduling-1] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor JuanIN_PROGRESS
+2024-08-24 17:44:54 [main] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor JuanIN_PROGRESS
+2024-08-24 17:44:54 [scheduling-1] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor Juanid128
+2024-08-24 17:44:54 [main] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor Juanid127
+2024-08-24 17:44:54 [scheduling-1] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor JuanIN_PROGRESS
+2024-08-24 17:44:54 [scheduling-1] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor Juanid130
+2024-08-24 17:44:54 [main] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor JuanIN_PROGRESS
+2024-08-24 17:44:54 [main] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor Juanid129
+2024-08-24 17:44:54 [scheduling-1] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor JuanIN_PROGRESS
+2024-08-24 17:44:54 [scheduling-1] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor Juanid131
+2024-08-24 17:44:54 [main] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor JuanIN_PROGRESS
+2024-08-24 17:44:54 [main] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor Juanid132
+2024-08-24 17:44:54 [scheduling-1] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor JuanIN_PROGRESS
+2024-08-24 17:44:54 [scheduling-1] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor Juanid133
+2024-08-24 17:44:54 [main] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor JuanIN_PROGRESS
+2024-08-24 17:44:54 [main] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor Juanid134
+2024-08-24 17:44:54 [scheduling-1] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor JuanIN_PROGRESS
+2024-08-24 17:44:54 [scheduling-1] INFO  c.m.g.b.processor.GtcDataProcessor - GtcDataProcessor Juanid135
+2024-08-24 17:44:54 [main] DEBUG o.s.b.i.database.JdbcBatchItemWriter - Executing batch with 4 items.
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.i.database.JdbcBatchItemWriter - Executing batch with 5 items.
+2024-08-24 17:44:54 [main] DEBUG o.s.b.c.s.item.ChunkOrientedTasklet - Inputs not busy, ended: true
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.c.s.item.ChunkOrientedTasklet - Inputs not busy, ended: true
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.core.step.tasklet.TaskletStep - Applying contribution: [StepContribution: read=5, written=5, filtered=0, readSkips=0, writeSkips=0, processSkips=0, exitStatus=EXECUTING]
+2024-08-24 17:44:54 [main] DEBUG o.s.b.core.step.tasklet.TaskletStep - Applying contribution: [StepContribution: read=4, written=4, filtered=0, readSkips=0, writeSkips=0, processSkips=0, exitStatus=EXECUTING]
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.core.step.tasklet.TaskletStep - Saving step execution before commit: StepExecution: id=205, version=1, name=gtcGeneration, status=STARTED, exitStatus=EXECUTING, readCount=5, filterCount=0, writeCount=5 readSkipCount=0, writeSkipCount=0, processSkipCount=0, commitCount=1, rollbackCount=0, exitDescription=
+2024-08-24 17:44:54 [main] DEBUG o.s.b.core.step.tasklet.TaskletStep - Saving step execution before commit: StepExecution: id=204, version=1, name=gtcGeneration, status=STARTED, exitStatus=EXECUTING, readCount=4, filterCount=0, writeCount=4 readSkipCount=0, writeSkipCount=0, processSkipCount=0, commitCount=1, rollbackCount=0, exitDescription=
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat is complete according to policy and result value.
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.batch.core.step.AbstractStep - Step execution success: id=205
+2024-08-24 17:44:54 [main] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat is complete according to policy and result value.
+2024-08-24 17:44:54 [main] DEBUG o.s.batch.core.step.AbstractStep - Step execution success: id=204
+2024-08-24 17:44:54 [main] INFO  o.s.batch.core.step.AbstractStep - Step: [gtcGeneration] executed in 37ms
+2024-08-24 17:44:54 [scheduling-1] INFO  o.s.batch.core.step.AbstractStep - Step: [gtcGeneration] executed in 37ms
+2024-08-24 17:44:54 [main] DEBUG o.s.batch.core.step.AbstractStep - Step execution complete: StepExecution: id=204, version=3, name=gtcGeneration, status=COMPLETED, exitStatus=COMPLETED, readCount=4, filterCount=0, writeCount=4 readSkipCount=0, writeSkipCount=0, processSkipCount=0, commitCount=1, rollbackCount=0
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.batch.core.step.AbstractStep - Step execution complete: StepExecution: id=205, version=3, name=gtcGeneration, status=COMPLETED, exitStatus=COMPLETED, readCount=5, filterCount=0, writeCount=5 readSkipCount=0, writeSkipCount=0, processSkipCount=0, commitCount=1, rollbackCount=0
+2024-08-24 17:44:54 [main] DEBUG o.s.b.c.job.flow.support.SimpleFlow - Completed state=Job.step0 with status=COMPLETED
+2024-08-24 17:44:54 [main] DEBUG o.s.b.c.job.flow.support.SimpleFlow - Handling state=Job.COMPLETED
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.c.job.flow.support.SimpleFlow - Completed state=Job.step0 with status=COMPLETED
+2024-08-24 17:44:54 [main] DEBUG o.s.b.c.job.flow.support.SimpleFlow - Completed state=Job.COMPLETED with status=COMPLETED
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.c.job.flow.support.SimpleFlow - Handling state=Job.COMPLETED
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.b.c.job.flow.support.SimpleFlow - Completed state=Job.COMPLETED with status=COMPLETED
+2024-08-24 17:44:54 [scheduling-1] DEBUG o.s.batch.core.job.AbstractJob - Job execution complete: JobExecution: id=209, version=1, startTime=2024-08-24T17:44:54.294515700, endTime=null, lastUpdated=2024-08-24T17:44:54.294515700, status=COMPLETED, exitStatus=exitCode=COMPLETED;exitDescription=, job=[JobInstance: id=203, version=0, Job=[Job]], jobParameters=[{'time':'{value=1724539494261, type=class java.lang.Long, identifying=true}'}]
+2024-08-24 17:44:54 [main] DEBUG o.s.batch.core.job.AbstractJob - Job execution complete: JobExecution: id=210, version=1, startTime=2024-08-24T17:44:54.295499600, endTime=null, lastUpdated=2024-08-24T17:44:54.295499600, status=COMPLETED, exitStatus=exitCode=COMPLETED;exitDescription=, job=[JobInstance: id=204, version=0, Job=[Job]], jobParameters=[{'run.id':'{value=1, type=class java.lang.Long, identifying=true}','time':'{value=1724524704616, type=class java.lang.Long, identifying=true}'}]
+2024-08-24 17:44:54 [main] INFO  o.s.b.c.l.support.SimpleJobLauncher - Job: [FlowJob: [name=Job]] completed with the following parameters: [{'run.id':'{value=1, type=class java.lang.Long, identifying=true}','time':'{value=1724524704616, type=class java.lang.Long, identifying=true}'}] and the following status: [COMPLETED] in 51ms
+2024-08-24 17:44:54 [scheduling-1] INFO  o.s.b.c.l.support.SimpleJobLauncher - Job: [FlowJob: [name=Job]] completed with the following parameters: [{'time':'{value=1724539494261, type=class java.lang.Long, identifying=true}'}] and the following status: [COMPLETED] in 52ms
+2024-08-24 17:45:04 [scheduling-1] INFO  o.s.b.c.l.support.SimpleJobLauncher - Job: [FlowJob: [name=Job]] launched with the following parameters: [{'time':'{value=1724539504266, type=class java.lang.Long, identifying=true}'}]
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.batch.core.job.AbstractJob - Job execution starting: JobExecution: id=211, version=0, startTime=null, endTime=null, lastUpdated=2024-08-24T17:45:04.276944, status=STARTING, exitStatus=exitCode=UNKNOWN;exitDescription=, job=[JobInstance: id=205, version=0, Job=[Job]], jobParameters=[{'time':'{value=1724539504266, type=class java.lang.Long, identifying=true}'}]
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.c.job.flow.support.SimpleFlow - Resuming state=Job.step0 with status=UNKNOWN
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.c.job.flow.support.SimpleFlow - Handling state=Job.step0
+2024-08-24 17:45:04 [scheduling-1] INFO  o.s.batch.core.job.SimpleStepHandler - Executing step: [gtcGeneration]
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.batch.core.step.AbstractStep - Executing: id=206
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Starting repeat context.
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat operation about to start at count=1
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.c.s.c.StepContextRepeatCallback - Preparing chunk execution for StepContext: org.springframework.batch.core.scope.context.StepContext@28cd71b9
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.c.s.c.StepContextRepeatCallback - Chunk execution starting: queue size=0
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Starting repeat context.
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat operation about to start at count=1
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.i.d.JdbcPagingItemReader - Reading page 0
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.i.d.JdbcPagingItemReader - SQL used for reading first page: [SELECT * FROM test_plans WHERE status = 'IN_PROGRESS' ORDER BY id ASC LIMIT 1000]
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat is complete according to policy and result value.
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.c.s.item.ChunkOrientedTasklet - Inputs not busy, ended: true
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.core.step.tasklet.TaskletStep - Applying contribution: [StepContribution: read=0, written=0, filtered=0, readSkips=0, writeSkips=0, processSkips=0, exitStatus=EXECUTING]
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.core.step.tasklet.TaskletStep - Saving step execution before commit: StepExecution: id=206, version=1, name=gtcGeneration, status=STARTED, exitStatus=EXECUTING, readCount=0, filterCount=0, writeCount=0 readSkipCount=0, writeSkipCount=0, processSkipCount=0, commitCount=1, rollbackCount=0, exitDescription=
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.repeat.support.RepeatTemplate - Repeat is complete according to policy and result value.
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.batch.core.step.AbstractStep - Step execution success: id=206
+2024-08-24 17:45:04 [scheduling-1] INFO  o.s.batch.core.step.AbstractStep - Step: [gtcGeneration] executed in 5ms
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.batch.core.step.AbstractStep - Step execution complete: StepExecution: id=206, version=3, name=gtcGeneration, status=COMPLETED, exitStatus=COMPLETED, readCount=0, filterCount=0, writeCount=0 readSkipCount=0, writeSkipCount=0, processSkipCount=0, commitCount=1, rollbackCount=0
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.c.job.flow.support.SimpleFlow - Completed state=Job.step0 with status=COMPLETED
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.c.job.flow.support.SimpleFlow - Handling state=Job.COMPLETED
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.b.c.job.flow.support.SimpleFlow - Completed state=Job.COMPLETED with status=COMPLETED
+2024-08-24 17:45:04 [scheduling-1] DEBUG o.s.batch.core.job.AbstractJob - Job execution complete: JobExecution: id=211, version=1, startTime=2024-08-24T17:45:04.282940700, endTime=null, lastUpdated=2024-08-24T17:45:04.282940700, status=COMPLETED, exitStatus=exitCode=COMPLETED;exitDescription=, job=[JobInstance: id=205, version=0, Job=[Job]], jobParameters=[{'time':'{value=1724539504266, type=class java.lang.Long, identifying=true}'}]
+2024-08-24 17:45:04 [scheduling-1] INFO  o.s.b.c.l.support.SimpleJobLauncher - Job: [FlowJob: [name=Job]] completed with the following parameters: [{'time':'{value=1724539504266, type=class java.lang.Long, identifying=true}'}] and the following status: [COMPLETED] in 13ms
+2024-08-24 17:45:12 [RMI TCP Connection(8)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+2024-08-24 17:45:12 [RMI TCP Connection(8)-127.0.0.1] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8081"]
+2024-08-24 17:45:12 [RMI TCP Connection(8)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-24 17:45:12 [RMI TCP Connection(8)-127.0.0.1] DEBUG o.s.b.c.c.s.JobRegistryBeanPostProcessor - Unregistering job: Job
+2024-08-24 17:45:12 [RMI TCP Connection(8)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource - SpringBootJPAHikariCP - Shutdown initiated...
+2024-08-24 17:45:12 [RMI TCP Connection(8)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource - SpringBootJPAHikariCP - Shutdown completed.
