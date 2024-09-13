@@ -9,16 +9,25 @@ import com.millicom.gtc.batchfit.entity.TestPlan;
 import com.millicom.gtc.batchfit.service.IntegrationService;
 import com.millicom.gtc.batchfit.service.impl.IntegrationServiceImpl;
 import java.util.List;
+
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.millicom.gtc.batchfit.dto.smnet.ProcessResultDto;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 @Component
 public class GtcDataProcessor implements ItemProcessor<TestPlan, TestPlanUpdateDto> {
 
     private static final Logger logger = LoggerFactory.getLogger(GtcDataProcessor.class);
   
-
+	 private final DataSource dataSource;
+	    // Inyección del DataSource en el constructor
+	    @Autowired
+	    public GtcDataProcessor(DataSource dataSource) {
+	        this.dataSource = dataSource;
+	    }
 
     @Override
     public TestPlanUpdateDto process(TestPlan item) {
@@ -95,7 +104,7 @@ public class GtcDataProcessor implements ItemProcessor<TestPlan, TestPlanUpdateD
     }
 
     private void processUnitaryTests(PruebaIntegrada prueba, String status) {
-         HFCResultProcessor hfcResultProcessor = new HFCResultProcessor(); 
+         HFCResultProcessor hfcResultProcessor = new HFCResultProcessor(dataSource); 
         SectionOssDto sectionOss = null;
         List<PruebaUnitaria> listaPruebasUnitarias = prueba.getPruebasUnitarias().getPruebaUnitaria();
         ProcessResultDto result = null;

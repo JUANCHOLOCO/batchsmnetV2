@@ -1,5 +1,6 @@
 package com.millicom.gtc.batchfit.processor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.millicom.gtc.batchfit.dto.smnet.AccessSectionHFCDto;
 import com.millicom.gtc.batchfit.dto.smnet.SectionOssDto;
 import com.millicom.gtc.batchfit.dto.smnet.SectionCpeHFCDto;
@@ -10,35 +11,51 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.AbstractMap;
 import java.util.Map;
+
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 
 @Component
 
 public class HFCResultProcessor {
+	 private final DataSource dataSource;
 	
-	@Autowired
-	@Lazy
-	private DiagnosticValidator diagnosticValidator;
+	    @Autowired
+	    public HFCResultProcessor(DataSource dataSource) {
+	        this.dataSource = dataSource;
+	    }
 	private static final Logger logger = LoggerFactory.getLogger(GtcDataProcessor.class);
 	  
 	public ProcessResultDto processResultsForHFC(SectionOssDto sectionOss, List<Resultado> resultados, String status) {
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		DiagnosticValidator diagnosticValidator = new DiagnosticValidator(dataSource);
 	    AccessSectionHFCDto accessSectionHFC = null;
 	    SectionCpeHFCDto cpeSectionHFC = null;
 	    List<Map.Entry<String, String>> hfcDiagnosticsList = new ArrayList<>();
 	    boolean partialTestError = false;
+	 	logger.info("[DataProcessor][process] paso declaracion de variables");
 
-	    if ("HFC".equals(sectionOss.getOssPortafolioTecnologia())) {
 	        for (Resultado testResult : resultados) {
+	        	logger.info("[DataProcessor][process] entro al for");
 	            if (testResult.getDiagnosticos() != null) {
 	                List<Diagnostico> diagnostics = testResult.getDiagnosticos().getDiagnostico();
+                    try {
+                        String json = objectMapper.writeValueAsString(diagnostics);
+                        logger.info("[DataProcessor][process] Resultados: " + json);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 	                for (Diagnostico diagnostic : diagnostics) {
 	                    hfcDiagnosticsList.add(new AbstractMap.SimpleEntry<>(diagnostic.getCodigo(), diagnostic.getDescripcion()));
 	                    if (!partialTestError && diagnosticValidator.validateDiagnosticCodeSMNet(diagnostic.getCodigo(), "manual", status, diagnostic.getCategoria())) {
+	                    	logger.info("[DataProcessor][process] hizo la validacion");
 	                        partialTestError = true;
 	                    }
 	                }
@@ -55,7 +72,6 @@ public class HFCResultProcessor {
 	                logger.error("Error parsing XML: " + e.getMessage());
 	            }
 	        }
-	    }
 	    
 	    return processHFCResults(accessSectionHFC, cpeSectionHFC, hfcDiagnosticsList);
 	}
@@ -64,7 +80,7 @@ public class HFCResultProcessor {
 	public ProcessResultDto processHFCResults(AccessSectionHFCDto accessSectionHFC, SectionCpeHFCDto cpeSectionHFC, List<Map.Entry<String, String>> hfcDiagnosticsList) {
 	    StringBuilder htmlCdata = new StringBuilder();
 	    StringBuilder consolidatedResponse = new StringBuilder();
-
+	    DiagnosticValidator diagnosticValidator = new DiagnosticValidator(dataSource);
 	    String htmlTableHeader = "<html><head><style type=\"text/css\">" +
 	            "table.tableizer-table {font-size: 12px; border: 1px solid #CCC; font-family: Arial, Helvetica, sans-serif;}" +
 	            ".tableizer-table td {padding: 4px; margin: 3px; border: 1px solid #ccc;}" +
@@ -103,7 +119,6 @@ public class HFCResultProcessor {
 	        }
 	    }
 
-	    // Finaliza el contenido HTML y cierra el CDATA
 	    htmlCdataContent += htmlCdata.toString() + "</table></body></html>]]>";
 
 	    return new ProcessResultDto(consolidatedResponse.toString(), htmlCdataContent);

@@ -110,7 +110,7 @@ public class JobConfiguration {
 
 	@Bean
 	public GtcDataProcessor gtcDataProcessor() {
-		return new GtcDataProcessor();
+		return new GtcDataProcessor(dataSource);
 	}
 
 }
