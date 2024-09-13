@@ -71,7 +71,6 @@ public class GtcDataProcessor implements ItemProcessor<TestPlan, TestPlanUpdateD
 
     public void TestResultResponse(SoapEnvelope testResult) {
         logger.info("[DataProcessor][process] TestResultResponse: entra al metodo");
-	    IntegrationService service = new IntegrationServiceImpl();
 
 
         String htmlTableFooter = "</table></body></html>";
@@ -139,10 +138,6 @@ public class GtcDataProcessor implements ItemProcessor<TestPlan, TestPlanUpdateD
                                 logger.error("Error parsing XML: " + e.getMessage());
                             }
                         }
-							MessageSalesForceDto msg = new MessageSalesForceDto();
-					        msg.setCallId("");
-					        msg.setUneAction1Details("");
-					        service.processMessage(msg) ; 
                     }
                 }
             }
