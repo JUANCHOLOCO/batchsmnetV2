@@ -31,7 +31,7 @@ public class GtcDataProcessor implements ItemProcessor<TestPlan, TestPlanUpdateD
 
     @Override
     public TestPlanUpdateDto process(TestPlan item) {
-        IntegrationService service = new IntegrationServiceImpl();
+    	 IntegrationService service = new IntegrationServiceImpl();
         SoapEnvelope response= null;
         PruebaIntegrada prueba;
         boolean finalizoPruebaSMNET = false;
@@ -105,6 +105,7 @@ public class GtcDataProcessor implements ItemProcessor<TestPlan, TestPlanUpdateD
     }
 
     private void processUnitaryTests(PruebaIntegrada prueba, String status) {
+    	 IntegrationService service = new IntegrationServiceImpl();
          HFCResultProcessor hfcResultProcessor = new HFCResultProcessor(dataSource); 
         SectionOssDto sectionOss = null;
         List<PruebaUnitaria> listaPruebasUnitarias = prueba.getPruebasUnitarias().getPruebaUnitaria();

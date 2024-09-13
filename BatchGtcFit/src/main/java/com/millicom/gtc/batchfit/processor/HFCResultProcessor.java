@@ -44,8 +44,9 @@ public class HFCResultProcessor {
 
 	        for (Resultado testResult : resultados) {
 	        	logger.info("[DataProcessor][process] entro al for");
-	            if (testResult.getDiagnosticos() != null) {
-	                List<Diagnostico> diagnostics = testResult.getDiagnosticos().getDiagnostico();
+	        	List<Diagnostico> diagnostics = testResult.getDiagnosticos().getDiagnostico();
+	            if (diagnostics != null) {
+	               
                     try {
                         String json = objectMapper.writeValueAsString(diagnostics);
                         logger.info("[DataProcessor][process] Resultados: " + json);
