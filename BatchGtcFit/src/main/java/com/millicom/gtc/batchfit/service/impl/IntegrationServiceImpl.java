@@ -39,15 +39,12 @@ public class IntegrationServiceImpl implements IntegrationService{
 		SoapEnvelope response = null;
 		try {
 			String request = create.createdRequestSmnet(id);
-			logger.info("[IntegrationServiceImpl][sendRequestedSmnet]-request= "+request);
+			//logger.info("[IntegrationServiceImpl][sendRequestedSmnet]-request= "+request);
 			response = deserializeXML(invokeSmnet(request));
-			SoapEnvelope pruebaIntegrada = null;
-			ObjectMapper objectMapper = new ObjectMapper();
-			  //String json = objectMapper.writeValueAsString(pruebaIntegrada);
-			    logger.info("[IMPRIMITEESTO] " + pruebaIntegrada.getBody().getResponse().getReturnValue().getInformacionPrueba().getIdPrueba());
-			logger.info("[IntegrationServiceImpl][sendRequestedSmnet]-response= "+response);
+			//logger.info("[IMPRIMITEESTO] " + response.getBody().getResponse().getReturnValue().getInformacionPrueba().getIdPrueba());
+			//logger.info("[IntegrationServiceImpl][sendRequestedSmnet]-response= "+response);
 		} catch (Exception e) {
-			logger.info("[IntegrationServiceImpl][sendRequestedSmnet]-Exception= "+e.getMessage());
+			//logger.info("[IntegrationServiceImpl][sendRequestedSmnet]-Exception= "+e.getMessage());
 			e.printStackTrace();
 		}
 		
@@ -57,11 +54,11 @@ public class IntegrationServiceImpl implements IntegrationService{
 	private String invokeSmnet(String Payload) {
 		
 		try {
-			logger.info("[IntegrationServiceImpl][invokeSmnet]-UrlSmnet="+url);
-			logger.info("[IntegrationServiceImpl][invokeSmnet]-soapAction="+urlaction);
+			//logger.info("[IntegrationServiceImpl][invokeSmnet]-UrlSmnet="+url);
+			//logger.info("[IntegrationServiceImpl][invokeSmnet]-soapAction="+urlaction);
 			
 		} catch (Exception e) {
-			logger.info("[IntegrationServiceImpl][invokeSmnet]-Exception= "+e.getMessage());
+			//logger.info("[IntegrationServiceImpl][invokeSmnet]-Exception= "+e.getMessage());
 			e.printStackTrace();
 		}
 		return invokeService(createRequestSmnetEnvelope(Payload));
@@ -83,10 +80,10 @@ public class IntegrationServiceImpl implements IntegrationService{
 
 	
 		try {
-			logger.info("[IntegrationServiceImpl][invokeService]-RequestGtcFit= "+request);
-			logger.info("[IntegrationServiceImpl][invokeService]-url= "+url);
+			//logger.info("[IntegrationServiceImpl][invokeService]-RequestGtcFit= "+request);
+			//logger.info("[IntegrationServiceImpl][invokeService]-url= "+url);
 			result = restTemplate.postForObject(url, entity, String.class);
-			logger.info("[IntegrationServiceImpl][invokeService]-result= "+result);		
+			//logger.info("[IntegrationServiceImpl][invokeService]-result= "+result);		
 			
 		} catch (RestClientException e) {
 			logger.info("[IntegrationServiceImpl][invokeService]-RestClientException= "+e.getMessage());

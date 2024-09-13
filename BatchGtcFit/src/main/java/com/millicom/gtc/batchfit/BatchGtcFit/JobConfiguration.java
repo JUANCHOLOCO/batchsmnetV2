@@ -15,19 +15,16 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
-import org.springframework.batch.item.database.JdbcPagingItemReader;
-import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
-import org.springframework.batch.item.database.support.MySqlPagingQueryProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.support.JdbcTransactionManager;
-
 import com.millicom.gtc.batchfit.entity.TestPlan;
 import com.millicom.gtc.batchfit.processor.GtcDataProcessor;
-import com.millicom.gtc.batchfit.database.TestPlanPreparedStatementSetter;
+import com.millicom.gtc.batchfit.dto.smnet.TestPlanUpdateDto;
+
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.core.ExitStatus;
@@ -60,12 +57,12 @@ public class JobConfiguration {
 	}
 	@Bean
 	public Step step1(JobRepository jobRepository, JdbcTransactionManager transactionManager,
-	        ItemReader<TestPlan> gtcDataTableReader, ItemProcessor<TestPlan, String> gtcDataProcessor,
-	        ItemWriter<String> gtcDataTableWriter) {
+	        ItemReader<TestPlan> gtcDataTableReader, ItemProcessor<TestPlan, TestPlanUpdateDto> gtcDataProcessor,
+	        ItemWriter<TestPlanUpdateDto> gtcDataTableWriter) {
 
 	    return new StepBuilder("gtcGeneration", jobRepository)
-	            .<TestPlan, String>chunk(10, transactionManager)
-	            .reader(gtcDataTableReader)  
+	            .<TestPlan, TestPlanUpdateDto>chunk(10, transactionManager)
+	            .reader(gtcDataTableReader)
 	            .processor(gtcDataProcessor)
 	            .writer(gtcDataTableWriter)
 	            .listener(new StepExecutionListener() {
@@ -81,7 +78,8 @@ public class JobConfiguration {
 	                    }
 	                    return stepExecution.getExitStatus();
 	                }
-	            }).build();
+	            })
+	            .build();
 	}
 
 	@Bean
@@ -96,14 +94,18 @@ public class JobConfiguration {
 	    return reader;
 	}
 
-
 	@Bean
-	public JdbcBatchItemWriter<String> gtcDataTableWriter(DataSource dataSource) {
-		System.out.println("gtcDataTableWriter Juan");
+	public JdbcBatchItemWriter<TestPlanUpdateDto> gtcDataTableWriter(DataSource dataSource) {
+	    String sql = "UPDATE test_plans SET status = ? WHERE diagnostic_id = ?";
 
-		String sql = "UPDATE test_plans SET status = 'COMPLETED' WHERE diagnostic_id = ? ";
-		return new JdbcBatchItemWriterBuilder<String>().dataSource(dataSource).sql(sql)
-				.itemPreparedStatementSetter(new TestPlanPreparedStatementSetter()).build();
+	    return new JdbcBatchItemWriterBuilder<TestPlanUpdateDto>()
+	            .dataSource(dataSource)
+	            .sql(sql)
+	            .itemPreparedStatementSetter((item, ps) -> {
+	                ps.setString(1, item.getNewStatus());
+	                ps.setString(2, item.getDiagnosticId());
+	            })
+	            .build();
 	}
 
 	@Bean
