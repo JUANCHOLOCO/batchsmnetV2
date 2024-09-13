@@ -6,6 +6,7 @@ import com.millicom.gtc.batchfit.dto.smnet.SectionOssDto;
 import com.millicom.gtc.batchfit.dto.smnet.SectionCpeHFCDto;
 import com.millicom.gtc.batchfit.dto.smnet.Resultado;
 import com.millicom.gtc.batchfit.dto.smnet.Diagnostico;
+import com.millicom.gtc.batchfit.dto.smnet.MessageSalesForceDto;
 import com.millicom.gtc.batchfit.dto.smnet.ProcessResultDto;
 import java.util.List;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class HFCResultProcessor {
 	    }
 	private static final Logger logger = LoggerFactory.getLogger(GtcDataProcessor.class);
 	  
-	public ProcessResultDto processResultsForHFC(SectionOssDto sectionOss, List<Resultado> resultados, String status) {
+	public ProcessResultDto processResultsForHFC(SectionOssDto sectionOss, List<Resultado> resultados, String status,String workOrderId,String id ) {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		DiagnosticValidator diagnosticValidator = new DiagnosticValidator(dataSource);
@@ -74,11 +75,11 @@ public class HFCResultProcessor {
 	            }
 	        }
 	    
-	    return processHFCResults(accessSectionHFC, cpeSectionHFC, hfcDiagnosticsList);
+	    return processHFCResults(accessSectionHFC, cpeSectionHFC, hfcDiagnosticsList, workOrderId, id );
 	}
 
     
-	public ProcessResultDto processHFCResults(AccessSectionHFCDto accessSectionHFC, SectionCpeHFCDto cpeSectionHFC, List<Map.Entry<String, String>> hfcDiagnosticsList) {
+	public ProcessResultDto processHFCResults(AccessSectionHFCDto accessSectionHFC, SectionCpeHFCDto cpeSectionHFC, List<Map.Entry<String, String>> hfcDiagnosticsList,String workOrderId,String id ) {
 	    StringBuilder htmlCdata = new StringBuilder();
 	    StringBuilder consolidatedResponse = new StringBuilder();
 	    DiagnosticValidator diagnosticValidator = new DiagnosticValidator(dataSource);
@@ -121,12 +122,10 @@ public class HFCResultProcessor {
 	    }
 
 	    htmlCdataContent += htmlCdata.toString() + "</table></body></html>]]>";
-
+	   
 	    return new ProcessResultDto(consolidatedResponse.toString(), htmlCdataContent);
 	}
-
-
-
+	
 
 }
 

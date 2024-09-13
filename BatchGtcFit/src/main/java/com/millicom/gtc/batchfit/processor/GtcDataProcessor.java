@@ -14,7 +14,6 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.millicom.gtc.batchfit.dto.smnet.ProcessResultDto;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @Component
@@ -38,6 +37,7 @@ public class GtcDataProcessor implements ItemProcessor<TestPlan, TestPlanUpdateD
         int maxAttempts = 3;
         int attempt = 0;
         String id = item.diagnosticId();
+        String workOrderId = item.workOrderId();
         String newStatus = null;
 
         logger.info("[GtcDataProcessor][process] Status: " + item.status());
@@ -68,7 +68,7 @@ public class GtcDataProcessor implements ItemProcessor<TestPlan, TestPlanUpdateD
                 }
             }
         }
-        TestResultResponse(response);
+        TestResultResponse(response,workOrderId,id);
 
         if (!finalizoPruebaSMNET) {
             logger.info("[GtcDataProcessor][process] Time out. No se encontró el estado 'FINALIZADA' o 'ERROR' después de 3 intentos.");
@@ -78,7 +78,7 @@ public class GtcDataProcessor implements ItemProcessor<TestPlan, TestPlanUpdateD
         return new TestPlanUpdateDto(id, newStatus);
     }
 
-    public void TestResultResponse(SoapEnvelope testResult) {
+    public void TestResultResponse(SoapEnvelope testResult, String workOrderId,String id ) {
         logger.info("[DataProcessor][process] TestResultResponse: entra al metodo");
 	IntegrationService service = new IntegrationServiceImpl();
 
@@ -99,12 +99,12 @@ public class GtcDataProcessor implements ItemProcessor<TestPlan, TestPlanUpdateD
             else if ("FINALIZADA".equals(prueba.getInformacionPrueba().getEstado())) {
             	  logger.info("[DataProcessor][process] TestResultResponse: entra al metodo al elseIF");
                 actionStatus = "FINALIZADA";
-                processUnitaryTests(prueba,actionStatus);
+                processUnitaryTests(prueba,actionStatus,workOrderId,id );
             }
         }
     }
 
-    private void processUnitaryTests(PruebaIntegrada prueba, String status) {
+    private void processUnitaryTests(PruebaIntegrada prueba, String status,String workOrderId,String id ) {
     	 IntegrationService service = new IntegrationServiceImpl();
          HFCResultProcessor hfcResultProcessor = new HFCResultProcessor(dataSource); 
         SectionOssDto sectionOss = null;
@@ -141,22 +141,44 @@ public class GtcDataProcessor implements ItemProcessor<TestPlan, TestPlanUpdateD
                                 logger.info("[DataProcessor][process] TestResultResponse: tecnologia"+tecnologia);
                                 if("HFC".equals(tecnologia)){
                                     logger.info("[DataProcessor][process] TestResultResponse: entra al if de tecnologia");
-                                	result= hfcResultProcessor.processResultsForHFC(sectionOss,resultados,status);
-                                	logger.info("[DataProcessor][process] TestResultResponse: el result es"+result.getHtmlCdata());
-                                	logger.info("[DataProcessor][process] TestResultResponse: el result es"+result.getConsolidatedResponse());
+                                	result= hfcResultProcessor.processResultsForHFC(sectionOss,resultados,status, workOrderId, id );
+                                	
                                 }
                             } catch (Exception e) {
                                 logger.error("Error parsing XML: " + e.getMessage());
                             }
                         }
-							MessageSalesForceDto msg = new MessageSalesForceDto();
-					        msg.setCallId("");
-					        msg.setUneAction1Details("");
-					        service.processMessage(msg) ;  
+							
+							 MessageSalesForceDto message = createMessageSalesForceDto(workOrderId,id,status,result.getConsolidatedResponse());
+					        service.processMessage(message) ;  
                     }
                 }
             }
         }
     }
+    
+
+	public MessageSalesForceDto createMessageSalesForceDto(
+	        String callId,
+	        String uneTestAndDiagnoseId,
+	        String uneActivateTestAndDiagnoseResult,
+	        String uneActivateTestAndDiagnoseResultDetails) {
+	    	  
+	    MessageSalesForceDto dto = new MessageSalesForceDto();
+	      
+	    dto.setCallId(callId);
+	    dto.setUneTestAndDiagnoseId(uneTestAndDiagnoseId);
+	    dto.setUneAction1Required(false);
+	    dto.setUneAction2Required(false);
+	    dto.setUneAction1Parameter(null);
+	    dto.setUneAction2Parameter(null);
+	    dto.setUneActionResult(null);
+	    dto.setUneAction1Details(null);
+	    dto.setUneAction2Details(null);
+	    dto.setUneActivateTestAndDiagnoseResult(uneActivateTestAndDiagnoseResult);
+	    dto.setUneActivateTestAndDiagnoseResultDetails(uneActivateTestAndDiagnoseResultDetails);
+	        
+	    return dto;
+	}
 
 }
