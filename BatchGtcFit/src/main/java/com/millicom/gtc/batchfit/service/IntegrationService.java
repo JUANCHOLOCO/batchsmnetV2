@@ -1,6 +1,8 @@
 package com.millicom.gtc.batchfit.service;
 
+import com.millicom.gtc.batchfit.dto.smnet.SoapEnvelope;
+
 public interface IntegrationService {
 
-	public String sendRequestedSmnet(String id);
+	public SoapEnvelope sendRequestedSmnet(String id);
 }

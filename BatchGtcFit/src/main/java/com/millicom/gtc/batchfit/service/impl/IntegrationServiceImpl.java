@@ -32,15 +32,19 @@ public class IntegrationServiceImpl implements IntegrationService{
 	private static final Logger logger = LoggerFactory.getLogger(IntegrationServiceImpl.class);
 	
 	@Override
-	public String sendRequestedSmnet(String id) {
+	public SoapEnvelope sendRequestedSmnet(String id) {
 		
         
 		CreateRequest create = new CreateRequest();
-		String response = null;
+		SoapEnvelope response = null;
 		try {
 			String request = create.createdRequestSmnet(id);
 			logger.info("[IntegrationServiceImpl][sendRequestedSmnet]-request= "+request);
-			response = invokeSmnet(request);
+			response = deserializeXML(invokeSmnet(request));
+			SoapEnvelope pruebaIntegrada = null;
+			ObjectMapper objectMapper = new ObjectMapper();
+			  //String json = objectMapper.writeValueAsString(pruebaIntegrada);
+			    logger.info("[IMPRIMITEESTO] " + pruebaIntegrada.getBody().getResponse().getReturnValue().getInformacionPrueba().getIdPrueba());
 			logger.info("[IntegrationServiceImpl][sendRequestedSmnet]-response= "+response);
 		} catch (Exception e) {
 			logger.info("[IntegrationServiceImpl][sendRequestedSmnet]-Exception= "+e.getMessage());
@@ -76,19 +80,13 @@ public class IntegrationServiceImpl implements IntegrationService{
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<String> entity = new HttpEntity<>(request, headers);
 		String result = null;
-		SoapEnvelope pruebaIntegrada = null;
-		ObjectMapper objectMapper = new ObjectMapper();
+
 	
 		try {
 			logger.info("[IntegrationServiceImpl][invokeService]-RequestGtcFit= "+request);
 			logger.info("[IntegrationServiceImpl][invokeService]-url= "+url);
 			result = restTemplate.postForObject(url, entity, String.class);
-			logger.info("[IntegrationServiceImpl][invokeService]-result= "+result);
-			pruebaIntegrada = deserializeXML(result);
-			  String json = objectMapper.writeValueAsString(pruebaIntegrada);
-			    logger.info("[IMPRIMITEESTO] " + json);
-			
-			
+			logger.info("[IntegrationServiceImpl][invokeService]-result= "+result);		
 			
 		} catch (RestClientException e) {
 			logger.info("[IntegrationServiceImpl][invokeService]-RestClientException= "+e.getMessage());
@@ -106,13 +104,9 @@ public class IntegrationServiceImpl implements IntegrationService{
 		return result;
 	}
     public static SoapEnvelope deserializeXML(String xmlResponse) throws JAXBException {
-        // Crear el contexto JAXB con la clase raíz (SoapEnvelope)
-        JAXBContext jaxbContext = JAXBContext.newInstance(SoapEnvelope.class);
-        
-        // Crear un deserializador (Unmarshaller)
+    
+        JAXBContext jaxbContext = JAXBContext.newInstance(SoapEnvelope.class);    
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        
-        // Deserializar el String XML a un objeto SoapEnvelope
         SoapEnvelope soapEnvelope = (SoapEnvelope) unmarshaller.unmarshal(new StringReader(xmlResponse));
         
         return soapEnvelope;  

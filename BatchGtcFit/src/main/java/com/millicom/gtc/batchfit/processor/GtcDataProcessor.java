@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.springframework.batch.item.ItemProcessor;
 
+import com.millicom.gtc.batchfit.dto.smnet.SoapEnvelope;
 import com.millicom.gtc.batchfit.entity.TestPlan;
 import com.millicom.gtc.batchfit.service.IntegrationService;
 import com.millicom.gtc.batchfit.service.impl.IntegrationServiceImpl;
@@ -20,7 +21,7 @@ public class GtcDataProcessor implements ItemProcessor<TestPlan, String> {
 	public String process(TestPlan item) {
 			
 		IntegrationService service = new IntegrationServiceImpl();
-		String response = null;
+		SoapEnvelope response = null;
 		logger.info("[GtcDataProcessor][process] Status " + item.status());
 		String id = item.diagnosticId();
 		logger.info("[GtcDataProcessor][process] id " + id);
@@ -34,4 +35,6 @@ public class GtcDataProcessor implements ItemProcessor<TestPlan, String> {
 	      
 		return id;
 	}
+	
+	
 }
