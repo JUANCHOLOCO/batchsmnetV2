@@ -12,7 +12,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -29,7 +28,10 @@ import org.springframework.core.ParameterizedTypeReference;
 import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
+
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 
 @Service
 public class IntegrationServiceImpl implements IntegrationService{
@@ -165,33 +167,40 @@ public class IntegrationServiceImpl implements IntegrationService{
 		//Gson g = new Gson();
 		UpdateStatusResponseDto response = new UpdateStatusResponseDto();
 		
+		try {
+			//log.generarArchivo("[CllClaseLogicaLocalImpl][sendMsgTest]-urlsendMsgTest= "+url);
+			RestTemplate restTemplate = new RestTemplate();
+			CloseableHttpClient httpClient = HttpClients.createDefault();
+			restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory(httpClient));
 			
-		//log.generarArchivo("[CllClaseLogicaLocalImpl][sendMsgTest]-urlsendMsgTest= "+url);
-		RestTemplate restTemplate = new RestTemplate();
-		Charset utf8 = StandardCharsets.UTF_8;
-		MediaType mediaType = new MediaType("application", "json", utf8);
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("X-TENANT-ID", operation);
-		headers.setContentType(mediaType);
-		ObjectMapper objectMapper = new ObjectMapper();
-		String json = objectMapper.writeValueAsString(payload);
-		//String json = functions.dtoToJson(payload);
-		//log.generarArchivo("[CllClaseLogicaLocalImpl][sendMsgTest]- request= "+json);
-		
-		HttpEntity<String> entity = new HttpEntity<>(json, headers);
-		ResponseEntity<String> orderResponse = restTemplate.exchange(url, HttpMethod.PATCH, entity,new ParameterizedTypeReference<String>() {});
-		logger.info("[CllClaseLogicaLocalImpl][sendMsgTest]-orderResponse= "+orderResponse.getBody());
-		if (orderResponse.getStatusCode() == HttpStatus.OK) {
-			response.setCode("200");
-			response.setMessage("Mensaje enviado");
-			response.setSuccess(true);
-			response.setData(orderResponse.getBody());
-		}else {
-			response.setCode("400");
-			response.setMessage("Fallo el envio del mensaje");
-			response.setSuccess(false);
-			response.setData(orderResponse);
-		}
+			Charset utf8 = StandardCharsets.UTF_8;
+			MediaType mediaType = new MediaType("application", "json", utf8);
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("X-TENANT-ID", operation);
+			headers.setContentType(mediaType);
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(payload);
+			//String json = functions.dtoToJson(payload);
+			//log.generarArchivo("[CllClaseLogicaLocalImpl][sendMsgTest]- request= "+json);
+			
+			HttpEntity<String> entity = new HttpEntity<>(json, headers);
+			ResponseEntity<String> orderResponse = restTemplate.exchange(url, HttpMethod.PATCH, entity,new ParameterizedTypeReference<String>() {});
+			logger.info("[CllClaseLogicaLocalImpl][sendMsgTest]-orderResponse= "+orderResponse.getBody());
+			if (orderResponse.getStatusCode() == HttpStatus.OK) {
+				response.setCode("200");
+				response.setMessage("Mensaje enviado");
+				response.setSuccess(true);
+				response.setData(orderResponse.getBody());
+			}else {
+				response.setCode("400");
+				response.setMessage("Fallo el envio del mensaje");
+				response.setSuccess(false);
+				response.setData(orderResponse);
+			}
+			
+		} catch (Exception e) {
+			logger.info("[CllClaseLogicaLocalImpl][sendMsgTest]-Exception= "+e.getMessage());
+		}	
 		return response;
 	}
       
