@@ -8,16 +8,28 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.millicom.gtc.batchfit.dto.smnet.MessageSalesForceDto;
 import com.millicom.gtc.batchfit.dto.smnet.SoapEnvelope;
+import com.millicom.gtc.batchfit.dto.smnet.TestResponseDto;
+import com.millicom.gtc.batchfit.dto.smnet.UpdateStatusResponseDto;
 import com.millicom.gtc.batchfit.service.IntegrationService;
 import com.millicom.gtc.batchfit.util.CreateRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.core.ParameterizedTypeReference;
 
 import java.io.StringReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Service
 public class IntegrationServiceImpl implements IntegrationService{
@@ -109,6 +121,79 @@ public class IntegrationServiceImpl implements IntegrationService{
         return soapEnvelope;  
     }
    
+    @Override
+	public String processMessage(MessageSalesForceDto message) {
+		
+		CreateRequest create = new CreateRequest();
+		try {
+				TestResponseDto msg = create.createdMesssageRequest(message);
+				//log.generarArchivo("[SoapServiceImpl] "+msg.getMessage());
+				UpdateStatusResponseDto response = sendMsgTest(msg);
+				//log.generarArchivo("[SoapServiceImpl] "+response.code);
+				/*
+				 * if(response.getCode()!=ConstantValues.COD200) {
+				 * responseMessage.setCode(response.getCode());
+				 * responseMessage.setStatus(ConstantValues.ERROR);
+				 * responseMessage.setMessage(response.getMessage()); } else {
+				 * responseMessage.setCode(response.getCode());
+				 * responseMessage.setStatus(ConstantValues.SUCESS);
+				 * responseMessage.setMessage(response.getMessage()); }
+				 */
+	        
+		} catch (Exception e) {
+			
+			/*
+			 * responseMessage.setCode(ConstantValues.COD500);
+			 * responseMessage.setStatus(ConstantValues.ERROR);
+			 * responseMessage.setMessage(e.getMessage());
+			 */
+		}
+		
+        return "Melo";
+	}
+    
  
+	public UpdateStatusResponseDto sendMsgTest(TestResponseDto payload) throws Exception {
+		
+		//String url = this.env.getRequiredProperty("url.send.message.test");
+		//JsonResponse url = functions.getDataToJsonByValues(ConstantValues.CREDENTIALS_SOAP, ConstantValues.URLBOTRESPONSE);
+		//JsonResponse operation = functions.getDataToJsonByValues(ConstantValues.CREDENTIALS_SOAP, ConstantValues.OPERATION);
+		String url = "http://54.80.84.169:8082/responseservice/api/millicom/sf/TestAndDiagnosis/update";
+		String operation = "co_b2c";
+		
+		//Gson g = new Gson();
+		UpdateStatusResponseDto response = new UpdateStatusResponseDto();
+		
+			
+		//log.generarArchivo("[CllClaseLogicaLocalImpl][sendMsgTest]-urlsendMsgTest= "+url);
+		RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+		Charset utf8 = StandardCharsets.UTF_8;
+		MediaType mediaType = new MediaType("application", "json", utf8);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("X-TENANT-ID", operation);
+		headers.setContentType(mediaType);
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json = objectMapper.writeValueAsString(payload);
+		//String json = functions.dtoToJson(payload);
+		//log.generarArchivo("[CllClaseLogicaLocalImpl][sendMsgTest]- request= "+json);
+		
+		HttpEntity<String> entity = new HttpEntity<>(json, headers);
+		ResponseEntity<String> orderResponse = restTemplate.exchange(url, HttpMethod.PATCH, entity,new ParameterizedTypeReference<String>() {});
+		//log.generarArchivo("[CllClaseLogicaLocalImpl][sendMsgTest]-orderResponse= "+orderResponse.getBody());
+		//log.generarArchivo("[CllClaseLogicaLocalImpl][sendMsgTest]-orderResponse= "+g.toJson(orderResponse));
+		if (orderResponse.getStatusCode() == HttpStatus.OK) {
+			response.setCode("200");
+			response.setMessage("Mensaje enviado");
+			response.setSuccess(true);
+			response.setData(orderResponse.getBody());
+		}else {
+			response.setCode("400");
+			response.setMessage("Fallo el envio del mensaje");
+			response.setSuccess(false);
+			response.setData(orderResponse);
+		}
+		return response;
+	}
+      
 
 }
