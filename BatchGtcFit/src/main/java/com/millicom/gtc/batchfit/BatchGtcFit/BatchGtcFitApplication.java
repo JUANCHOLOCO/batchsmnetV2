@@ -6,6 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
+//@ComponentScan(basePackages = "com.millicom.gtc.batchfit.processor")
 public class BatchGtcFitApplication {
 
 	public static void main(String[] args) {

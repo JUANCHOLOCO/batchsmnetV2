@@ -1,6 +1,8 @@
 package com.millicom.gtc.batchfit.processor;
 
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.millicom.gtc.batchfit.dto.smnet.*;
 import com.millicom.gtc.batchfit.entity.TestPlan;
@@ -9,10 +11,14 @@ import com.millicom.gtc.batchfit.service.impl.IntegrationServiceImpl;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.millicom.gtc.batchfit.dto.smnet.ProcessResultDto;
 
+@Component
 public class GtcDataProcessor implements ItemProcessor<TestPlan, TestPlanUpdateDto> {
 
     private static final Logger logger = LoggerFactory.getLogger(GtcDataProcessor.class);
+  
+
 
     @Override
     public TestPlanUpdateDto process(TestPlan item) {
@@ -66,16 +72,6 @@ public class GtcDataProcessor implements ItemProcessor<TestPlan, TestPlanUpdateD
     public void TestResultResponse(SoapEnvelope testResult) {
         logger.info("[DataProcessor][process] TestResultResponse: entra al metodo");
 
-      
-        String htmlTableHeader = "<html><head><style type=\"text/css\">" +
-                "table.tableizer-table {font-size: 12px; border: 1px solid #CCC; font-family: Arial, Helvetica, sans-serif;}" +
-                ".tableizer-table td {padding: 4px; margin: 3px; border: 1px solid #ccc;}" +
-                ".tableizer-table th {background-color: #FFFFFF; color: #000; font-weight: bold;}" +
-                ".tableizer-firstrow th {background-color: #000000; color: #FFF; font-weight: bold;}" +
-                ".tableizer-secondsrows th {background-color: #AFAFAF; color: #000; font-weight: bold;}" +
-                ".tableizer-secondsrows td {background-color: #FFFFFF; color: #000; font-weight: bold;}" +
-                "</style></head><body><table style=\"width:100%\" class=\"tableizer-table\">" +
-                "<tr class=\"tableizer-firstrow\"><th colspan=\"7\">Electrical Test Result</th></tr>";
 
         String htmlTableFooter = "</table></body></html>";
         String actionStatus = "ERROR";
@@ -90,18 +86,19 @@ public class GtcDataProcessor implements ItemProcessor<TestPlan, TestPlanUpdateD
                 htmlCDATA = "<![CDATA[<h2>Timeout expired!!</h2>]]>";
                } 
  
-            else if ("FINALIZADO".equals(prueba.getInformacionPrueba().getEstado())) {
+            else if ("FINALIZADA".equals(prueba.getInformacionPrueba().getEstado())) {
             	  logger.info("[DataProcessor][process] TestResultResponse: entra al metodo al elseIF");
-                actionStatus = "FINALIZADO";
-                processUnitaryTests(prueba);
+                actionStatus = "FINALIZADA";
+                processUnitaryTests(prueba,actionStatus);
             }
-            logger.info("[DataProcessor][process] TestResultResponse: )"+prueba.getInformacionPrueba().getEstado());
         }
     }
 
-    private void processUnitaryTests(PruebaIntegrada prueba) {
+    private void processUnitaryTests(PruebaIntegrada prueba, String status) {
+         HFCResultProcessor hfcResultProcessor = new HFCResultProcessor(); 
         SectionOssDto sectionOss = null;
         List<PruebaUnitaria> listaPruebasUnitarias = prueba.getPruebasUnitarias().getPruebaUnitaria();
+        ProcessResultDto result = null;
 
         if (listaPruebasUnitarias != null && !listaPruebasUnitarias.isEmpty()) {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -123,11 +120,28 @@ public class GtcDataProcessor implements ItemProcessor<TestPlan, TestPlanUpdateD
                     }
                     for (Resultado testResultItem : resultados) {
                         if ("OSS".equals(testResultItem.getCategoria())) {
-                            // Procesar resultados para OSS
+                            String xmlData = testResultItem.getDatos();
+                            try {
+                            	 logger.info("[DataProcessor][process] TestResultResponse: entra al parserado del xml");
+                                sectionOss = XMLParserUtility.parseXML(xmlData, SectionOssDto.class);
+                                String tecnologia = sectionOss.getOssPortafolioTecnologia();
+                                String json = objectMapper.writeValueAsString(sectionOss);
+                                logger.info("[DataProcessor][process] Resultados: " + json);
+                                logger.info("[DataProcessor][process] TestResultResponse: tecnologia"+tecnologia);
+                                if("HFC".equals(tecnologia)){
+                                    logger.info("[DataProcessor][process] TestResultResponse: entra al if de tecnologia");
+                                	result= hfcResultProcessor.processResultsForHFC(sectionOss,resultados,status);
+                                	logger.info("[DataProcessor][process] TestResultResponse: el result es"+result.getHtmlCdata());
+                                	logger.info("[DataProcessor][process] TestResultResponse: el result es"+result.getConsolidatedResponse());
+                                }
+                            } catch (Exception e) {
+                                logger.error("Error parsing XML: " + e.getMessage());
+                            }
                         }
                     }
                 }
             }
         }
     }
+
 }
