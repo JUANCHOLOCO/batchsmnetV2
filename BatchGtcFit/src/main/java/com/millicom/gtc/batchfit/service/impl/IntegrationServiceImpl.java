@@ -126,10 +126,11 @@ public class IntegrationServiceImpl implements IntegrationService{
 		
 		CreateRequest create = new CreateRequest();
 		try {
+				logger.info("[SoapServiceImpl][processMessage] "+message.getCallId());
 				TestResponseDto msg = create.createdMesssageRequest(message);
 				//log.generarArchivo("[SoapServiceImpl] "+msg.getMessage());
 				UpdateStatusResponseDto response = sendMsgTest(msg);
-				//log.generarArchivo("[SoapServiceImpl] "+response.code);
+				logger.info("[SoapServiceImpl] "+response.code);
 				/*
 				 * if(response.getCode()!=ConstantValues.COD200) {
 				 * responseMessage.setCode(response.getCode());
@@ -166,7 +167,7 @@ public class IntegrationServiceImpl implements IntegrationService{
 		
 			
 		//log.generarArchivo("[CllClaseLogicaLocalImpl][sendMsgTest]-urlsendMsgTest= "+url);
-		RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+		RestTemplate restTemplate = new RestTemplate();
 		Charset utf8 = StandardCharsets.UTF_8;
 		MediaType mediaType = new MediaType("application", "json", utf8);
 		HttpHeaders headers = new HttpHeaders();
@@ -179,8 +180,7 @@ public class IntegrationServiceImpl implements IntegrationService{
 		
 		HttpEntity<String> entity = new HttpEntity<>(json, headers);
 		ResponseEntity<String> orderResponse = restTemplate.exchange(url, HttpMethod.PATCH, entity,new ParameterizedTypeReference<String>() {});
-		//log.generarArchivo("[CllClaseLogicaLocalImpl][sendMsgTest]-orderResponse= "+orderResponse.getBody());
-		//log.generarArchivo("[CllClaseLogicaLocalImpl][sendMsgTest]-orderResponse= "+g.toJson(orderResponse));
+		logger.info("[CllClaseLogicaLocalImpl][sendMsgTest]-orderResponse= "+orderResponse.getBody());
 		if (orderResponse.getStatusCode() == HttpStatus.OK) {
 			response.setCode("200");
 			response.setMessage("Mensaje enviado");

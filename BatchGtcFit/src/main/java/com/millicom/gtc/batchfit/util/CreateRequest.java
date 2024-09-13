@@ -1,17 +1,20 @@
 package com.millicom.gtc.batchfit.util;
 
 import java.util.function.Supplier;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.millicom.gtc.batchfit.dto.smnet.MessageSalesForceDto;
 import com.millicom.gtc.batchfit.dto.smnet.SmnetRequestDto;
-import com.millicom.gtc.batchfit.dto.smnet.SoapEnvelope;
 import com.millicom.gtc.batchfit.dto.smnet.TestDataDto;
 import com.millicom.gtc.batchfit.dto.smnet.TestResponseDto;
 
 @Component
 public class CreateRequest {
-	
+	private static final Logger logger = LoggerFactory.getLogger(CreateRequest.class);
 	public String createdRequestSmnet(String id)throws Exception {
 		Supplier<SmnetRequestDto> req = SmnetRequestDto::new;
 		SmnetRequestDto request = req.get();
@@ -21,7 +24,7 @@ public class CreateRequest {
 	}
 	
 	public TestResponseDto createdMesssageRequest(MessageSalesForceDto message)throws Exception {
-			
+		ObjectMapper objectMapper = new ObjectMapper();
 			TestResponseDto request = new TestResponseDto();
 			TestDataDto data = new TestDataDto();
 			//log.generarArchivo("[CreateRequestMessageTest][createdMesssageRequest]-Inicia creacion request"); 
@@ -40,7 +43,8 @@ public class CreateRequest {
 			data.setUNEActivateTestAndDiagnoseResult(message.getUneActivateTestAndDiagnoseResult());
 			data.setUNEActivateTestAndDiagnoseResultDetails(message.getUneActivateTestAndDiagnoseResultDetails());
 			request.setData(data);
-			//log.generarArchivo("[CreateRequestMessageTest][createdMesssageRequest]-fin creacion request");
+			String json = objectMapper.writeValueAsString(request);
+			logger.info("[CreateRequest][createdMesssageRequest]-fin creacion request "+ json);
 			return request;
 				  
 	}
